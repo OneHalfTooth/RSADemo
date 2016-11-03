@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "RSAEncryptor.h"
 
 @interface ViewController ()
 
@@ -16,7 +17,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    //原始数据
+    NSString * originalstring = @"这是一段将要加密的字符串";
+    //使用公钥私钥加密解密
+    NSString * publicKeyPath = [[NSBundle mainBundle]pathForResource:@"public_key.der" ofType:nil];
+    NSString * privateKeyPath = [[NSBundle mainBundle]pathForResource:@"private_key.p12" ofType:nil];
+    
+    NSString * encryptStr = [RSAEncryptor encryptString:originalstring publicKeyWithContentsOfFile:publicKeyPath];
+    NSLog(@"%@",encryptStr);
+    NSLog(@"%@",[RSAEncryptor decryptString:encryptStr privateKeyWithContentsOfFile:privateKeyPath password:@"123456"]);
+    
+    
+    
+    
+
+    
 }
 
 
